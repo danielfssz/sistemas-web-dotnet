@@ -21,11 +21,11 @@ namespace Aula2
         private void button1_Click(object sender, EventArgs e)
         {
             // 1. Instancia a conexão(objeto SqlConnection)
-            SqlConnection conn = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=aula2;Integrated Security=SSPI");
+            SqlConnection conn = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=aula;Integrated Security=SSPI");
             //
-                 
+
             // define um SqlDataReader nulo
-            SqlDataReader dr =null;
+            SqlDataReader dr = null;
 
             try
             {
@@ -38,14 +38,14 @@ namespace Aula2
 
                 SqlDataAdapter da = new SqlDataAdapter();
 
-                
                 // 4. Usa conexão
                 // obtêm o resultado da consulta
                 dr = cmd.ExecuteReader();
                 // imprime o codigo do cliente para cada registro
                 while (dr.Read())
                 {
-                    Console.WriteLine(dr["login"].ToString() + dr["Nome"].ToString());
+                    MessageBox.Show(dr["login"].ToString() + dr["Nome"].ToString());
+                    //Console.WriteLine(dr["login"].ToString() + dr["Nome"].ToString());
                 }
             }
             finally
@@ -68,8 +68,6 @@ namespace Aula2
             Conexao cn = new Conexao();
             try
             {
-               
-
                 cn.Abrir();
                 SqlDataReader dr = cn.retornaDataReader("select * from login");
                 //cn.Fechar(); 
@@ -84,7 +82,8 @@ namespace Aula2
             {
                 MessageBox.Show(ex.Message);
             }
-            finally {
+            finally
+            {
                 cn.Fechar();
             }
         }
@@ -94,26 +93,22 @@ namespace Aula2
             Conexao cn = new Conexao();
             try
             {
-
-
                 cn.Abrir();
                 DataSet ds;
-                ds = cn.retornaDataset("select * from login");
+                // ds = cn.retornaDataset("select * from login");
+                ds = cn.retornaDataset("select top 1 * from login; select top 1 * from login top3; select * from login todos");
                 cn.Fechar();
 
-                if (ds.Tables[0].Rows.Count > 0) {
-
-                    Console.WriteLine(ds.Tables[0].Rows[0]["login"].ToString() + " - "+ ds.Tables[0].Rows[0]["nome"].ToString());
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    MessageBox.Show(ds.Tables[0].Rows[0]["login"].ToString() + " - " + ds.Tables[0].Rows[0]["nome"].ToString());
+                    Console.WriteLine(ds.Tables[0].Rows[0]["login"].ToString() + " - " + ds.Tables[0].Rows[0]["nome"].ToString());
                 }
 
-
-
-
-               /* while (dr.Read())
-                {
-                    Console.WriteLine(dr["login"].ToString() + dr["Nome"].ToString());
-                }*/
-
+                /* while (dr.Read())
+                 {
+                     Console.WriteLine(dr["login"].ToString() + dr["Nome"].ToString());
+                 }*/
 
             }
             catch (Exception ex)
@@ -124,6 +119,51 @@ namespace Aula2
             {
                 cn.Fechar();
             }
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Conexao cn = new Conexao();
+
+            DataTable tb = cn.retornaTabela("select * from login");
+
+            if (tb.Rows.Count > 0)
+            {
+                listBox1.Items.Clear();
+
+                foreach (DataRow item in tb.Rows)
+                {
+                    listBox1.Items.Add(item["login"].ToString() + " - " + item["nome"].ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Não há itens para exibir....");
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(this.login.Text))
+            {
+                MessageBox.Show("O login nao pode ser null");
+                return;
+            }
+            else if (string.IsNullOrEmpty(senha.Text))
+            {
+                MessageBox.Show("A senha nao pode ser null");
+                return;
+            }
+
+            Conexao cn = new Conexao();
+
+            Object i = cn.ExecuteScalar(string.Format("pr_ins_login {0},{1},{2}", login.Text, nome.Text, senha.Text));
+
+
+            MessageBox.Show(i.ToString());
+
+
 
         }
     }

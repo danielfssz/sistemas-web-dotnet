@@ -11,7 +11,7 @@ namespace Aula2
 {
     class Conexao
     {
-        SqlConnection conn = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=aula2;Integrated Security=SSPI");
+        SqlConnection conn = new SqlConnection("Data Source=localhost\\SQLEXPRESS;Initial Catalog=aula;Integrated Security=SSPI");
         SqlCommand cmd = null;
         SqlDataAdapter da = new SqlDataAdapter();
 
@@ -66,6 +66,59 @@ namespace Aula2
 
         }
 
+        public DataTable retornaTabela(String sql)
+        {
+
+            try
+            {
+                DataSet ds = new DataSet(); //Objeto que receberá os dados do banco de dados
+                SqlCommand cmd = new SqlCommand(); //Comando sql
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+
+                da.Fill(ds, "MinhaTabela");
+
+                DataTable tb = ds.Tables[0];
+                return tb;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public Object ExecuteScalar(String sql)
+        {
+
+            try
+            {
+                if (conn.State == 0)
+                {
+                    Abrir();
+                }
+                else
+                {
+                    Fechar();
+                }
+
+                SqlDataReader dr; //Objeto que receberá os dados do banco de dados
+                SqlCommand cmd = new SqlCommand(); //Comando sql 
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+
+                var id = cmd.ExecuteScalar();
+                Fechar();
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }
 
