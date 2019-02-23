@@ -102,6 +102,7 @@ namespace Aula2
                 else
                 {
                     Fechar();
+                    Abrir();
                 }
 
                 SqlDataReader dr; //Objeto que receberá os dados do banco de dados

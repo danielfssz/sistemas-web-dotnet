@@ -147,12 +147,12 @@ namespace Aula2
         {
             if (string.IsNullOrEmpty(this.login.Text))
             {
-                MessageBox.Show("O login nao pode ser null");
+                MessageBox.Show("O login não pode ser null");
                 return;
             }
             else if (string.IsNullOrEmpty(senha.Text))
             {
-                MessageBox.Show("A senha nao pode ser null");
+                MessageBox.Show("A senha não pode ser null");
                 return;
             }
 
@@ -160,11 +160,7 @@ namespace Aula2
 
             Object i = cn.ExecuteScalar(string.Format("pr_ins_login {0},{1},{2}", login.Text, nome.Text, senha.Text));
 
-
             MessageBox.Show(i.ToString());
-
-
-
         }
     }
 }
