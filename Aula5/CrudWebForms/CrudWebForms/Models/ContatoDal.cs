@@ -73,6 +73,7 @@ namespace CrudWebForms.Models
                 con.Close();
             }
         }
+
         public static string deletarContato(int codigo)
         {
             SqlConnection con = new SqlConnection(AcessoDal.ConnectionString);
@@ -94,6 +95,7 @@ namespace CrudWebForms.Models
                 con.Close();
             }
         }
+
         public static string atualizarContato(Contato contato)
         {
             SqlConnection con = new SqlConnection(AcessoDal.ConnectionString);
