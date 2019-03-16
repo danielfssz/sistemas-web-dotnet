@@ -11,10 +11,18 @@ namespace CrudWebForms.Models
     {
         public static DataSet GetContatos()
         {
+            // Abre a conexão com o banco
             SqlConnection con = new SqlConnection(AcessoDal.ConnectionString);
+
+            // Cria um SqlDataAdapter apontando para o nome Stored Procedure
             SqlDataAdapter da = new SqlDataAdapter("CarregarDados", con);
+
+            // Seta o tipo de comando para Stored Procedure
             da.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            // Cria um data set
             DataSet ds = new DataSet();
+
             da.Fill(ds, "contatos");
             return ds;
         }
@@ -27,6 +35,8 @@ namespace CrudWebForms.Models
                 con.Open();
                 SqlCommand cmd = new SqlCommand("getContato", con);
                 cmd.CommandType = CommandType.StoredProcedure;
+
+                // Adiciona um parametro a Stored Procedure
                 cmd.Parameters.AddWithValue("@codigo", codigo);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.Read())
