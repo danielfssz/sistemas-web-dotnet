@@ -1,42 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+//importar namespace
+using System.Data.SqlClient;
+using System.Data;
 
-namespace CrudWebForms.Models
+namespace CrudWebForm.Models
 {
     public class ContatoDAL
     {
         public static DataSet GetContatos()
         {
-            // Abre a conexão com o banco
-            SqlConnection con = new SqlConnection(AcessoDal.ConnectionString);
-
-            // Cria um SqlDataAdapter apontando para o nome Stored Procedure
+            SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             SqlDataAdapter da = new SqlDataAdapter("CarregarDados", con);
-
-            // Seta o tipo de comando para Stored Procedure
             da.SelectCommand.CommandType = CommandType.StoredProcedure;
-
-            // Cria um data set
             DataSet ds = new DataSet();
-
             da.Fill(ds, "contatos");
             return ds;
         }
 
         public static Contato GetContato(int codigo)
         {
-            SqlConnection con = new SqlConnection(AcessoDal.ConnectionString);
+            SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             try
             {
                 con.Open();
                 SqlCommand cmd = new SqlCommand("getContato", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-
-                // Adiciona um parametro a Stored Procedure
                 cmd.Parameters.AddWithValue("@codigo", codigo);
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.Read())
@@ -62,7 +53,7 @@ namespace CrudWebForms.Models
 
         public void incluirContato(Contato contato)
         {
-            SqlConnection con = new SqlConnection(AcessoDal.ConnectionString);
+            SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             try
             {
                 con.Open();
@@ -83,10 +74,9 @@ namespace CrudWebForms.Models
                 con.Close();
             }
         }
-
         public static string deletarContato(int codigo)
         {
-            SqlConnection con = new SqlConnection(AcessoDal.ConnectionString);
+            SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             try
             {
                 con.Open();
@@ -105,10 +95,9 @@ namespace CrudWebForms.Models
                 con.Close();
             }
         }
-
         public static string atualizarContato(Contato contato)
         {
-            SqlConnection con = new SqlConnection(AcessoDal.ConnectionString);
+            SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             try
             {
                 con.Open();

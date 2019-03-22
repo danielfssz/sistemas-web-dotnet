@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Configuration;
+using System.Web.Configuration; // incluir o namespace
 
-namespace CrudWebForms.Models
+namespace CrudWebForm
 {
-    public class AcessoDal
+    public class AcessoDB
     {
         static public String ConnectionString
         {
             get
-            {
+            {    // pega a string de conexão do web.config
                 return WebConfigurationManager.ConnectionStrings["Conexao"].ConnectionString;
+               
             }
         }
     }

@@ -1,3 +1,8 @@
+create database aula6 
+go
+use aula6 
+go
+
 create table contatos (
 codigo int identity(1,1) primary key,
 nome varchar(100),
