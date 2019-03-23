@@ -97,11 +97,10 @@ go
 CREATE PROCEDURE dbo.atualizarCliente ( 
 	@id int, 
 	@nome varchar(100),
-	@codigo varchar(11),
-	@dataCadastro datetime
+	@codigo varchar(11)	
 )
 AS
-UPDATE cliente SET nome=@nome, codigo=@codigo, dataCadastro=@dataCadastro WHERE id=@id
+UPDATE cliente SET nome=@nome, codigo=@codigo WHERE id=@id
 
 go
 

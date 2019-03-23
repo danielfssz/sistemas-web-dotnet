@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="IncluirCliente.aspx.cs" Inherits="CrudWebForm.IncluirCliente" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AtualizarCliente.aspx.cs" Inherits="CrudWebForm.AtualizarCliente" %>
 
 <!DOCTYPE html>
 
@@ -14,19 +14,23 @@
         <form id="form1" runat="server">
             <div class="form-group">
                 <label for="exampleInputEmail1">Código</label>
-                <input type="text" class="form-control" id="codigo" aria-describedby="emailHelp" placeholder="Código">     
-                <br />
-                <button type="submit" class="btn btn-primary">Pesquisar</button>
+                <asp:TextBox class="invisible" ID="txtId" runat="server"></asp:TextBox>                    
+                <asp:TextBox class="form-control" ID="txtCodigo" runat="server"></asp:TextBox>                    
+                <br />                
+                <asp:Button class="btn btn-primary" ID="btnGetDetalhes" runat="server" Text="Obter Detalhes" OnClick="btnGetDetalhes_Click" />
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Nome</label>
-                <input type="text" class="form-control" id="nome" placeholder="Nome">
+                <label for="exampleInputPassword1">Nome</label>                
+                <asp:TextBox class="form-control" ID="txtNome" runat="server" placeholder="Nome"></asp:TextBox>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Data Cadastro</label>
-                <input type="text" class="form-control" id="dt_cadastro" disabled>
+                <label for="exampleInputPassword1">Data Cadastro</label>                
+                <asp:TextBox class="form-control" ID="txtData" runat="server" disable></asp:TextBox>
             </div>
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <br />
+            <asp:Label ID="lblMsg" runat="server" EnableViewState="False"></asp:Label>
+            <br />            
+            <asp:Button class="btn btn-primary" ID="btnAtualiza" runat="server" Text="Atualizar Contato" Enabled="false" OnClick="btnAtualizar_Click" /><br />
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

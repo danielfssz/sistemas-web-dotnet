@@ -34,6 +34,7 @@ namespace CrudWebForm.Models
                     Cliente ct = new Cliente();
                     ct.Nome = dr["nome"].ToString();
                     ct.Codigo = dr["codigo"].ToString();
+                    ct.Id = int.Parse(dr["id"].ToString());
                     ct.DataCriacao = DateTime.Parse(dr["dataCadastro"].ToString());
                     return ct;
                 }
@@ -102,9 +103,9 @@ namespace CrudWebForm.Models
                 con.Open();
                 SqlCommand cmd = new SqlCommand("atualizarCliente", con);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", cliente.Id);
                 cmd.Parameters.AddWithValue("@codigo", cliente.Codigo);
-                cmd.Parameters.AddWithValue("@nome", cliente.Nome);
-                cmd.Parameters.AddWithValue("@dataCadastro", cliente.DataCriacao);                
+                cmd.Parameters.AddWithValue("@nome", cliente.Nome);                
                 cmd.ExecuteNonQuery();
                 return null; // success 
             }
