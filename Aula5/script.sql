@@ -75,7 +75,7 @@ go
 
 create table cliente ( 
 id int identity (1,1),
-codigo varchar(5) primary key,
+codigo varchar(11) primary key,
 nome varchar(100),
 datacadastro datetime
 
@@ -85,7 +85,7 @@ go
 
 create procedure dbo.inserirCliente (
 	@nome varchar(100), 
-	@codigo varchar(5), 
+	@codigo varchar(11), 
 	@dataCadastro datetime
 )
 AS
@@ -97,7 +97,7 @@ go
 CREATE PROCEDURE dbo.atualizarCliente ( 
 	@id int, 
 	@nome varchar(100),
-	@codigo varchar(5),
+	@codigo varchar(11),
 	@dataCadastro datetime
 )
 AS
@@ -107,10 +107,10 @@ go
 
 
 CREATE PROCEDURE dbo.deletarCliente (
-	@id int
+	@codigo varchar(11)
 )
 AS
-DELETE FROM cliente WHERE id = @id
+DELETE FROM cliente WHERE codigo = @codigo
 
 go
 
@@ -124,8 +124,8 @@ go
 
 CREATE PROCEDURE dbo.getCliente
 (
-    @id int
+    @codigo varchar(11)
 )
 AS
-SELECT * FROM cliente WHERE id = @id
+SELECT * FROM cliente WHERE codigo = @codigo
 

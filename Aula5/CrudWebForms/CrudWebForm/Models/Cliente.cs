@@ -9,6 +9,6 @@ namespace CrudWebForm.Models
     {
         public string Codigo { get; set; }
         public string Nome { get; set; }        
-        public DateTime Idade { get; set; }
+        public DateTime DataCriacao { get; set; }
     }
 }

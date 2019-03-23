@@ -12,14 +12,14 @@ namespace CrudWebForm.Models
         public static DataSet GetContatos()
         {
             SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
-            SqlDataAdapter da = new SqlDataAdapter("CarregarDados", con);
+            SqlDataAdapter da = new SqlDataAdapter("carregarClientes", con);
             da.SelectCommand.CommandType = CommandType.StoredProcedure;
             DataSet ds = new DataSet();
             da.Fill(ds, "cliente");
             return ds;
         }
 
-        public static Contato GetCliente(int codigo)
+        public static Cliente GetCliente(int codigo)
         {
             SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             try
@@ -31,10 +31,10 @@ namespace CrudWebForm.Models
                 SqlDataReader dr = cmd.ExecuteReader();
                 if (dr.Read())
                 {
-                    Contato ct = new Contato();
+                    Cliente ct = new Cliente();
                     ct.Nome = dr["nome"].ToString();
-                    ct.Email = dr["email"].ToString();
-                    ct.Idade = Int32.Parse(dr["idade"].ToString());
+                    ct.Codigo = dr["codigo"].ToString();
+                    ct.DataCriacao = DateTime.Parse(dr["dataCadastro"].ToString());
                     return ct;
                 }
                 else
@@ -50,17 +50,17 @@ namespace CrudWebForm.Models
             }
         }
 
-        public void incluirContato(Contato contato)
+        public void incluirCliente(Cliente cliente)
         {
             SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             try
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("InserirDados", con);
+                SqlCommand cmd = new SqlCommand("inserirCliente", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@nome", contato.Nome);
-                cmd.Parameters.AddWithValue("@email", contato.Email);
-                cmd.Parameters.AddWithValue("@idade", contato.Idade);
+                cmd.Parameters.AddWithValue("@codigo", cliente.Codigo);
+                cmd.Parameters.AddWithValue("@nome", cliente.Nome);
+                cmd.Parameters.AddWithValue("@dataCadastro", cliente.DataCriacao);
                 cmd.ExecuteNonQuery();
 
             }
@@ -73,13 +73,13 @@ namespace CrudWebForm.Models
                 con.Close();
             }
         }
-        public static string deletarContato(int codigo)
+        public static string deletarCliente(int codigo)
         {
             SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             try
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("DeletarDados", con);
+                SqlCommand cmd = new SqlCommand("deletarCliente", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@codigo", codigo);
                 cmd.ExecuteNonQuery();
@@ -94,18 +94,17 @@ namespace CrudWebForm.Models
                 con.Close();
             }
         }
-        public static string atualizarContato(Contato contato)
+        public static string atualizarCliente(Cliente cliente)
         {
             SqlConnection con = new SqlConnection(AcessoDB.ConnectionString);
             try
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("AtualizarDados", con);
+                SqlCommand cmd = new SqlCommand("atualizarCliente", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@codigo", contato.Codigo);
-                cmd.Parameters.AddWithValue("@nome", contato.Nome);
-                cmd.Parameters.AddWithValue("@email", contato.Email);
-                cmd.Parameters.AddWithValue("@idade", contato.Idade);
+                cmd.Parameters.AddWithValue("@codigo", cliente.Codigo);
+                cmd.Parameters.AddWithValue("@nome", cliente.Nome);
+                cmd.Parameters.AddWithValue("@dataCadastro", cliente.DataCriacao);                
                 cmd.ExecuteNonQuery();
                 return null; // success 
             }

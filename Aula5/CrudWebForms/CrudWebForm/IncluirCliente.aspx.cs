@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CrudWebForm.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,25 +17,23 @@ namespace CrudWebForm
 
         protected void btnIncluirCliente_Click(object sender, EventArgs e)
         {
-            //ContatoDAL ctDal = new ContatoDAL();
-            //Contato _contato = new Contato();
+            ClienteDAL ctDal = new ClienteDAL();
+            Cliente _cliente = new Cliente();
 
-            //_contato.Nome = txtNome.Text;
-            //_contato.Email = txtEmail.Text;
-            //_contato.Idade = Int32.Parse(txtIdade.Text);
-
-            //try
-            //{
-            //    ctDal.incluirContato(_contato);
-            //    lblMsg.Text = "Contato incluído com sucesso!";
-            //    txtEmail.Text = "";
-            //    txtIdade.Text = "";
-            //    txtNome.Text = "";
-            //}
-            //catch (Exception ex)
-            //{
-            //    lblMsg.Text = "Error -> " + ex.Message;
-            //}
+            _cliente.Nome = txtNomeCliente.Text;
+            _cliente.Codigo = txtCodigoCliente.Text;
+            _cliente.DataCriacao = DateTime.Now;
+            try
+            {
+                ctDal.incluirCliente(_cliente);
+                lblMsg.Text = "Cliente incluído com sucesso!";
+                txtNomeCliente.Text = "";
+                txtCodigoCliente.Text = "";                
+            }
+            catch (Exception ex)
+            {
+                lblMsg.Text = "Error -> " + ex.Message;
+            }
         }
     }
 }

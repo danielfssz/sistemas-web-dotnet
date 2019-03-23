@@ -21,7 +21,10 @@
                 <label for="exampleInputPassword1">Nome</label>
                 <asp:TextBox ID="txtNomeCliente" runat="server" class="form-control" placeholder="Nome"></asp:TextBox>
                 <%--<input type="text" class="form-control" id="nome" placeholder="Nome">--%>
-            </div>            
+            </div>
+            <br />
+            <asp:Label ID="lblMsg" runat="server" EnableViewState="False"></asp:Label><br />
+            <br />
             <asp:Button ID="btnIncluirCliente" class="btn btn-primary" runat="server" Text="Incluir Cliente" OnClick="btnIncluirCliente_Click" />            
         </form>
     </div>
