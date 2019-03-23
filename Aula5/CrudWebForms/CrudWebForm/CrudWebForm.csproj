@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -94,6 +95,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AtualizarCliente.aspx" />
+    <Content Include="DeletarCliente.aspx" />
+    <Content Include="IncluirCliente.aspx" />
+    <Content Include="ListarCliente.aspx" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -122,6 +127,13 @@
     <Compile Include="Atualizar.aspx.designer.cs">
       <DependentUpon>Atualizar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AtualizarCliente.aspx.cs">
+      <DependentUpon>AtualizarCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AtualizarCliente.aspx.designer.cs">
+      <DependentUpon>AtualizarCliente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -136,6 +148,13 @@
     <Compile Include="Deletar.aspx.designer.cs">
       <DependentUpon>Deletar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DeletarCliente.aspx.cs">
+      <DependentUpon>DeletarCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeletarCliente.aspx.designer.cs">
+      <DependentUpon>DeletarCliente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Incluir.aspx.cs">
       <DependentUpon>Incluir.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -143,12 +162,26 @@
     <Compile Include="Incluir.aspx.designer.cs">
       <DependentUpon>Incluir.aspx</DependentUpon>
     </Compile>
+    <Compile Include="IncluirCliente.aspx.cs">
+      <DependentUpon>IncluirCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IncluirCliente.aspx.designer.cs">
+      <DependentUpon>IncluirCliente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Listar.aspx.cs">
       <DependentUpon>Listar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Listar.aspx.designer.cs">
       <DependentUpon>Listar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListarCliente.aspx.cs">
+      <DependentUpon>ListarCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListarCliente.aspx.designer.cs">
+      <DependentUpon>ListarCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\AcessoDAL.cs" />
     <Compile Include="Global.asax.cs">

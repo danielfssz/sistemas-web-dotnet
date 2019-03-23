@@ -1,6 +1,7 @@
-create database aula6 
+create database aula6
 go
-use aula6 
+
+use aula6
 go
 
 create table contatos (
@@ -68,4 +69,63 @@ CREATE PROCEDURE dbo.getContato
 )
 AS
 select * from Contatos Where codigo = @codigo
+
+go
+
+
+create table cliente ( 
+id int identity (1,1),
+codigo varchar(5) primary key,
+nome varchar(100),
+datacadastro datetime
+
+)
+
+go
+
+create procedure dbo.inserirCliente (
+	@nome varchar(100), 
+	@codigo varchar(5), 
+	@dataCadastro datetime
+)
+AS
+INSERT INTO cliente(nome, codigo, datacadastro) VALUES(@nome, @codigo, @dataCadastro)
+
+go
+
+
+CREATE PROCEDURE dbo.atualizarCliente ( 
+	@id int, 
+	@nome varchar(100),
+	@codigo varchar(5),
+	@dataCadastro datetime
+)
+AS
+UPDATE cliente SET nome=@nome, codigo=@codigo, dataCadastro=@dataCadastro WHERE id=@id
+
+go
+
+
+CREATE PROCEDURE dbo.deletarCliente (
+	@id int
+)
+AS
+DELETE FROM cliente WHERE id = @id
+
+go
+
+
+CREATE PROCEDURE dbo.carregarClientes
+AS
+SELECT * FROM cliente
+
+go
+
+
+CREATE PROCEDURE dbo.getCliente
+(
+    @id int
+)
+AS
+SELECT * FROM cliente WHERE id = @id
 
