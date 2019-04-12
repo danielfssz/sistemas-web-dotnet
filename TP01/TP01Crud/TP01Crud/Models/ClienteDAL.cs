@@ -31,18 +31,21 @@ namespace TP01Crud.Models
                 cmd.Parameters.AddWithValue("@acao", operacao);
 
                 SqlDataReader dr = cmd.ExecuteReader();
+
+                
+
                 if (dr.Read())
                 {
                     Cliente ct = new Cliente();
                     cliente.Id = int.Parse(dr["id"].ToString());
-                    cliente.NomeFantasia = dr["nome"].ToString();
-                    cliente.RazaoSocial = dr["razao"].ToString();
-                    cliente.CNPJ = dr["cnpj"].ToString();
-                    cliente.Rua = dr["rua"].ToString();
-                    cliente.CEP = dr["cep"].ToString();
-                    cliente.Bairro = dr["bairro"].ToString();
-                    cliente.Cidade = dr["cidade"].ToString();
-                    cliente.Estado = dr["estado"].ToString();                   
+                    cliente.NomeFantasia = dr["Nome_Fantasia"].ToString();
+                    cliente.RazaoSocial = dr["Razao_Social"].ToString();
+                    cliente.CNPJ = dr["Cnpj"].ToString();
+                    cliente.Rua = dr["Rua"].ToString();
+                    cliente.CEP = dr["Cep"].ToString();
+                    cliente.Bairro = dr["Bairro"].ToString();
+                    cliente.Cidade = dr["Cidade"].ToString();
+                    cliente.Estado = dr["Estado"].ToString();                   
 
                     return ct;
                 }

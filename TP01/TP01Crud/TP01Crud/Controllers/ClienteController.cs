@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TP01Crud.Models;
 
 namespace TP01Crud.Controllers
 {
@@ -28,12 +29,12 @@ namespace TP01Crud.Controllers
 
         // POST: Cliente/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Cliente cliente)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                ClienteDAL clienteDal = new ClienteDAL();
+                clienteDal.ExecutaOperacao(cliente, "INS");
                 return RedirectToAction("Index");
             }
             catch
@@ -45,17 +46,20 @@ namespace TP01Crud.Controllers
         // GET: Cliente/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ClienteDAL clienteDal = new ClienteDAL();
+            Cliente cliente = new Cliente(id);            
+            clienteDal.ExecutaOperacao(cliente, "SEL");
+            return View(cliente);
         }
 
         // POST: Cliente/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Cliente cliente)
         {
             try
             {
-                // TODO: Add update logic here
-
+                ClienteDAL clienteDal = new ClienteDAL();
+                clienteDal.ExecutaOperacao(cliente, "UPD");
                 return RedirectToAction("Index");
             }
             catch

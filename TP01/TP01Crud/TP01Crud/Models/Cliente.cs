@@ -16,5 +16,22 @@ namespace TP01Crud.Models
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
+
+        public Cliente()
+        {
+
+        }
+        public Cliente(int id)
+        {
+            Id = id;
+            NomeFantasia = "";
+            RazaoSocial = "";
+            CNPJ = "";
+            Rua = "";
+            CEP = "";
+            Bairro = "";
+            Cidade = "";
+            Estado = "";
+        }
     }
 }
