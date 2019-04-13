@@ -12,13 +12,18 @@ namespace TP01Crud.Controllers
         // GET: Cliente
         public ActionResult Index()
         {
-            return View();
+            ClienteDAL clienteDal = new ClienteDAL();
+            var ret = clienteDal.ExecutaOperacao(null, "SEL");
+            return View(ret);
         }
 
         // GET: Cliente/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            ClienteDAL clienteDal = new ClienteDAL();
+            Cliente cliente = new Cliente(id);
+            var ret = clienteDal.ExecutaOperacao(cliente, "SEL");
+            return View(ret);
         }
 
         // GET: Cliente/Create
@@ -48,8 +53,8 @@ namespace TP01Crud.Controllers
         {
             ClienteDAL clienteDal = new ClienteDAL();
             Cliente cliente = new Cliente(id);            
-            clienteDal.ExecutaOperacao(cliente, "SEL");
-            return View(cliente);
+            var ret = clienteDal.ExecutaOperacao(cliente, "SEL");
+            return View(ret);
         }
 
         // POST: Cliente/Edit/5
@@ -62,7 +67,7 @@ namespace TP01Crud.Controllers
                 clienteDal.ExecutaOperacao(cliente, "UPD");
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -71,20 +76,24 @@ namespace TP01Crud.Controllers
         // GET: Cliente/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            ClienteDAL clienteDal = new ClienteDAL();
+            Cliente cliente = new Cliente(id);
+            var ret = clienteDal.ExecutaOperacao(cliente, "SEL");
+            return View(ret);
         }
 
         // POST: Cliente/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Cliente clientee)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                ClienteDAL clienteDal = new ClienteDAL();
+                Cliente cliente = new Cliente(id);
+                clienteDal.ExecutaOperacao(cliente, "DEL");
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
