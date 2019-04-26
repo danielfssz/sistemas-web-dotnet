@@ -74,17 +74,19 @@ namespace P1Crud.Controllers
         // GET: Cliente/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            ClienteDAL clienteDal = new ClienteDAL();
+            var cliente = clienteDal.selecionarCliente(id);
+            return View(cliente);
         }
 
         // POST: Cliente/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Cliente cliente)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                ClienteDAL clienteDal = new ClienteDAL();
+                clienteDal.excluiCliente(cliente);
                 return RedirectToAction("Index");
             }
             catch
