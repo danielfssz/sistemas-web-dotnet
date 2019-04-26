@@ -50,17 +50,19 @@ namespace P1Crud.Controllers
         // GET: Cliente/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ClienteDAL clienteDal = new ClienteDAL();
+            var cliente = clienteDal.selecionarCliente(id);
+            return View(cliente);
         }
 
         // POST: Cliente/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Cliente cliente)
         {
             try
             {
-                // TODO: Add update logic here
-
+                ClienteDAL clienteDal = new ClienteDAL();
+                clienteDal.atualizaCliente(cliente);
                 return RedirectToAction("Index");
             }
             catch
