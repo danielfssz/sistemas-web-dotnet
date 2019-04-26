@@ -20,7 +20,9 @@ namespace P1Crud.Controllers
         // GET: Cliente/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            ClienteDAL clienteDal = new ClienteDAL();
+            var cliente = clienteDal.selecionarCliente(id);
+            return View(cliente);
         }
 
         // GET: Cliente/Create

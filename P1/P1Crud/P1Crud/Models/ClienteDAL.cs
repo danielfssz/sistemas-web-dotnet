@@ -105,7 +105,7 @@ namespace P1Crud.Models
         }
 
         //SELECIONAR_CLIENTE
-        public Cliente selecionarCliente(Cliente c)
+        public Cliente selecionarCliente(int id)
         {
             SqlConnection con = new SqlConnection(AcessoDAL.ConnectionString);
             try
@@ -115,7 +115,7 @@ namespace P1Crud.Models
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 /* Defino valores do cliente */
-                cmd.Parameters.AddWithValue("@ID", c.Id);
+                cmd.Parameters.AddWithValue("@ID", id);
 
                 SqlDataReader dr = cmd.ExecuteReader();
 
