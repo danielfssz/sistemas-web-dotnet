@@ -16,7 +16,7 @@ namespace P1Crud.Models
             try
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("INSERE_CLIENTE", con);
+                SqlCommand cmd = new SqlCommand("INSERIR_CLIENTE", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 /* Defino valores do cliente */                
