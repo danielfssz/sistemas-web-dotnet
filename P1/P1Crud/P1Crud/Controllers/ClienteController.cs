@@ -1,4 +1,5 @@
-﻿using System;
+﻿using P1Crud.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,9 @@ namespace P1Crud.Controllers
         // GET: Cliente
         public ActionResult Index()
         {
-            return View();
+            ClienteDAL clienteDal = new ClienteDAL();
+            var listaCliente = clienteDal.selecionarClientes();
+            return View(listaCliente);
         }
 
         // GET: Cliente/Details/5
@@ -28,12 +31,12 @@ namespace P1Crud.Controllers
 
         // POST: Cliente/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Cliente cliente)
         {
             try
-            {
-                // TODO: Add insert logic here
-
+            {   
+                ClienteDAL clienteDal = new ClienteDAL();
+                clienteDal.insereCliente(cliente);
                 return RedirectToAction("Index");
             }
             catch
