@@ -76,8 +76,6 @@ namespace P1Crud.Models
             {
                 con.Close();
             }
-
-            return null;
         }
 
         //EXCLUIR_CLIENTE
