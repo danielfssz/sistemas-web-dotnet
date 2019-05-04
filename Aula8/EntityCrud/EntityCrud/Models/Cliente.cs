@@ -20,7 +20,7 @@ namespace EntityCrud.Models
         public string Email { get; set; }
 
         [Required]
-        [ForeignKey("Consultores")]
+        [ForeignKey("Consultor")]
         public int IdConsultor { get; set; }
         public virtual Consultor Consultor { get; set; }
         public virtual List<Telefone> Telefones { get; set; }
