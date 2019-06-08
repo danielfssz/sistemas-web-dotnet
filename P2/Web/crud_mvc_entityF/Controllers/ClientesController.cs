@@ -4,21 +4,24 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using crud_mvc_entityF.Models;
+using crud_mvc_entityF.Services;
 
 namespace crud_mvc_entityF.Controllers
 {
     public class ClientesController : Controller
     {
         private LojaContext db = new LojaContext();
+        private ClientesService clientesService = new ClientesService();
 
         // GET: Clientes
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var clientes = db.Clientes.Include(c => c.Consultor);
-            return View(clientes.ToList());
+            var clientes = await clientesService.GetClientesAsync();
+            return View(clientes);
         }
 
         // GET: Clientes/Details/5
@@ -51,12 +54,11 @@ namespace crud_mvc_entityF.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,Email,IdConsultor,Telefones")] Cliente cliente)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Nome,Email,IdConsultor,Telefones")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-                db.Clientes.Add(cliente);
-                db.SaveChanges();
+                await clientesService.AddClienteAsync(cliente);                
                 return RedirectToAction("Index");
             }
 
