@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using API.Models;
+using Newtonsoft.Json;
 
 namespace API.Controllers
 {
@@ -17,9 +18,10 @@ namespace API.Controllers
         private LojaContext db = new LojaContext();
 
         // GET: api/Clientes
-        public IQueryable<Cliente> GetClientes()
+        public string GetClientes()
         {
-            return db.Clientes;
+            List<Cliente> clientes =  db.Clientes.ToList();
+            return JsonConvert.SerializeObject(clientes);
         }
 
         // GET: api/Clientes/5
