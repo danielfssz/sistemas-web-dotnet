@@ -20,7 +20,8 @@ namespace crud_mvc_entityF.Controllers
         // GET: Clientes
         public async Task<ActionResult> Index()
         {
-            var clientes = await clientesService.GetClientesAsync();
+            //var clientes = await clientesService.GetClientesAsync();
+            var clientes = db.Clientes;
             return View(clientes);
         }
 
@@ -58,7 +59,9 @@ namespace crud_mvc_entityF.Controllers
         {
             if (ModelState.IsValid)
             {
-                await clientesService.AddClienteAsync(cliente);                
+                //await clientesService.AddClienteAsync(cliente);                
+                db.Clientes.Add(cliente);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
