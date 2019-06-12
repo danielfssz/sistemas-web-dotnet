@@ -23,9 +23,8 @@ namespace APIP2.Controllers
         // GET: api/Clientes
         [HttpGet]
         public IEnumerable<Cliente> GetClientes()
-        {
-            var clientes = _context.Clientes;
-            return clientes;
+        {   
+            return _context.Clientes;
         }
 
         // GET: api/Clientes/5
