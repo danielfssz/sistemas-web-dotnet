@@ -11,13 +11,15 @@ namespace APIP2.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        //[Required]
+        //[MaxLength(100)]
         public String Nome { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        //[Required]
+        //[MaxLength(100)]
         public String Email { get; set; }
+
+        public List<Telefone> Telefones { get; set; }
 
         [Required]
         [ForeignKey("Consultor")]
@@ -25,6 +27,6 @@ namespace APIP2.Models
 
         public virtual Consultor Consultor { get; set; }
 
-        public virtual List<Telefone> Telefones { get; set; }
+        //public virtual List<Telefone> Telefones { get; set; }
     }
 }

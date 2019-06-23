@@ -4,30 +4,36 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using crud_mvc_entityF.Models;
+using crud_mvc_entityF.Services;
 
 namespace crud_mvc_entityF.Controllers
 {
     public class ConsultoresController : Controller
     {
         private LojaContext db = new LojaContext();
+        private ConsultoresService consultoresService = new ConsultoresService();
 
         // GET: Consultores
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(db.Consultores.ToList());
+            var consultores = await consultoresService.GetConsultoresAsync();
+            return View(consultores);
+            //return View(db.Consultores.ToList());
         }
 
         // GET: Consultores/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Consultor consultor = db.Consultores.Find(id);
+            var consultor = await consultoresService.GetConsultorAsync(id);
+            //Consultor consultor = db.Consultores.Find(id);
             if (consultor == null)
             {
                 return HttpNotFound();
@@ -46,12 +52,13 @@ namespace crud_mvc_entityF.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome")] Consultor consultor)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Nome")] Consultor consultor)
         {
             if (ModelState.IsValid)
             {
-                db.Consultores.Add(consultor);
-                db.SaveChanges();
+                await consultoresService.AddConsultorAsync(consultor);
+                //db.Consultores.Add(consultor);
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -59,13 +66,14 @@ namespace crud_mvc_entityF.Controllers
         }
 
         // GET: Consultores/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Consultor consultor = db.Consultores.Find(id);
+            //Consultor consultor = db.Consultores.Find(id);
+            var consultor = await consultoresService.GetConsultorAsync(id);
             if (consultor == null)
             {
                 return HttpNotFound();
@@ -78,25 +86,27 @@ namespace crud_mvc_entityF.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome")] Consultor consultor)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Nome")] Consultor consultor)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(consultor).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(consultor).State = EntityState.Modified;
+                //db.SaveChanges();
+                await consultoresService.EditConsultorAsync(consultor);
                 return RedirectToAction("Index");
             }
             return View(consultor);
         }
 
         // GET: Consultores/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Consultor consultor = db.Consultores.Find(id);
+            //Consultor consultor = db.Consultores.Find(id);
+            var consultor = await consultoresService.GetConsultorAsync(id);
             if (consultor == null)
             {
                 return HttpNotFound();
@@ -107,21 +117,22 @@ namespace crud_mvc_entityF.Controllers
         // POST: Consultores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Consultor consultor = db.Consultores.Find(id);
-            db.Consultores.Remove(consultor);
-            db.SaveChanges();
+            //Consultor consultor = db.Consultores.Find(id);
+            //db.Consultores.Remove(consultor);
+            //db.SaveChanges();
+            await consultoresService.RemoveConsultorAsync(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

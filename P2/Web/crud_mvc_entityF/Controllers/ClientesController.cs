@@ -14,19 +14,22 @@ namespace crud_mvc_entityF.Controllers
 {
     public class ClientesController : Controller
     {
-        private LojaContext db = new LojaContext();
+        //private LojaContext db = new LojaContext();
         private ClientesService clientesService = new ClientesService();
+        private ConsultoresService consultoresService = new ConsultoresService();
 
         // GET: Clientes
         public async Task<ActionResult> Index()
         {
-            //var clientes = await clientesService.GetClientesAsync();
-            var clientes = db.Clientes;
+
+            var clientes = await clientesService.GetClientesAsync();
             return View(clientes);
+            //var clientes = db.Clientes.Include(c => c.Consultor);
+            //return View(await clientes.ToListAsync());
         }
 
         // GET: Clientes/Details/5
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -34,7 +37,9 @@ namespace crud_mvc_entityF.Controllers
             }
 
             // Cliente cliente = db.Clientes.Find(id);
-            Cliente cliente = db.Clientes.Include(c => c.Consultor).Include(c => c.Telefones).FirstOrDefault(c =>c.Id == id);
+            //Cliente cliente = db.Clientes.Include(c => c.Consultor).Include(c => c.Telefones).FirstOrDefault(c =>c.Id == id);
+
+            var cliente = await clientesService.GetClienteAsync(id);
 
             if (cliente == null)
             {
@@ -44,9 +49,11 @@ namespace crud_mvc_entityF.Controllers
         }
 
         // GET: Clientes/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewBag.IdConsultor = new SelectList(db.Consultores, "Id", "Nome");
+            var consultores = await consultoresService.GetConsultoresAsync();
+            ViewBag.IdConsultor = new SelectList(consultores, "Id", "Nome");
+            //ViewBag.IdConsultor = new SelectList(db.Consultores, "Id", "Nome");
             return View();
         }
 
@@ -59,29 +66,35 @@ namespace crud_mvc_entityF.Controllers
         {
             if (ModelState.IsValid)
             {
-                //await clientesService.AddClienteAsync(cliente);                
-                db.Clientes.Add(cliente);
-                db.SaveChanges();
+                await clientesService.AddClienteAsync(cliente);
+                //db.Clientes.Add(cliente);
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdConsultor = new SelectList(db.Consultores, "Id", "Nome",cliente.IdConsultor);
+            var consultores = await consultoresService.GetConsultoresAsync();
+            ViewBag.IdConsultor = new SelectList(consultores, "Id", "Nome",cliente.IdConsultor);
             return View(cliente);
         }
 
         // GET: Clientes/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Clientes.Find(id);
+
+            var cliente = await clientesService.GetClienteAsync(id);
+
             if (cliente == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdConsultor = new SelectList(db.Consultores, "Id", "Nome", cliente.IdConsultor);
+
+            var consultores = await consultoresService.GetConsultoresAsync();
+
+            ViewBag.IdConsultor = new SelectList(consultores, "Id", "Nome", cliente.IdConsultor);
             return View(cliente);
         }
 
@@ -90,35 +103,40 @@ namespace crud_mvc_entityF.Controllers
         // obter mais detalhes, consulte https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Email,IdConsultor,Telefones")] Cliente cliente)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Nome,Email,IdConsultor,Telefones")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
 
-                foreach (var telefone in cliente.Telefones)
-                {
-                    if (telefone.Id > 0)
-                        db.Entry(telefone).State = EntityState.Modified;
-                    else
-                        db.Entry(telefone).State = EntityState.Added;
-                }
+                //foreach (var telefone in cliente.Telefones)
+                //{
+                //    if (telefone.Id > 0)
+                //        db.Entry(telefone).State = EntityState.Modified;
+                //    else
+                //        db.Entry(telefone).State = EntityState.Added;
+                //}
 
-                db.Entry(cliente).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(cliente).State = EntityState.Modified;
+                //db.SaveChanges();
+                await clientesService.EditClienteAsync(cliente);
                 return RedirectToAction("Index");
             }
-            ViewBag.IdConsultor = new SelectList(db.Consultores, "Id", "Nome", cliente.IdConsultor);
+            //ViewBag.IdConsultor = new SelectList(db.Consultores, "Id", "Nome", cliente.IdConsultor);
+            var consultores = await consultoresService.GetConsultoresAsync();
+            ViewBag.IdConsultor = new SelectList(consultores, "Id", "Nome", cliente.IdConsultor);
             return View(cliente);
         }
 
         // GET: Clientes/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Clientes.Find(id);
+            //Cliente cliente = db.Clientes.Find(id);
+            var cliente = await clientesService.GetClienteAsync(id);
+
             if (cliente == null)
             {
                 return HttpNotFound();
@@ -129,30 +147,31 @@ namespace crud_mvc_entityF.Controllers
         // POST: Clientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Cliente cliente = db.Clientes.Find(id);
-            db.Telefone.RemoveRange(cliente.Telefones);
-            db.Clientes.Remove(cliente);
-            db.SaveChanges();
+            //Cliente cliente = db.Clientes.Find(id);
+            //db.Telefone.RemoveRange(cliente.Telefones);
+            //db.Clientes.Remove(cliente);
+            //db.SaveChanges();
+            await clientesService.RemoveClienteAsync(id);
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public void RemoverTelefone(int id)
-        {
-            var telefone = db.Telefone.Find(id);
-            db.Entry(telefone).State = EntityState.Deleted;
-            db.SaveChanges();
-        }
+        //[HttpPost]
+        //public void RemoverTelefone(int id)
+        //{
+        //    var telefone = db.Telefone.Find(id);
+        //    db.Entry(telefone).State = EntityState.Deleted;
+        //    db.SaveChanges();
+        //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

@@ -9,8 +9,8 @@ namespace APIP2.Models
     public class Consultor
     {
         public int Id { get; set; }
-        [Required]
-        [MaxLength(100)]
+        //[Required]
+        //[MaxLength(100)]
         public String Nome { get; set; }
     }
 }

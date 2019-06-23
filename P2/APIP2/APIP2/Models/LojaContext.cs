@@ -17,5 +17,12 @@ namespace APIP2.Models
               : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cliente>().ToTable("Cliente");
+            modelBuilder.Entity<Consultor>().ToTable("Consultor");
+            modelBuilder.Entity<Telefone>().ToTable("Telefone");
+        }
     }
 }
